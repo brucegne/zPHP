@@ -19,8 +19,12 @@ $request = $airtable->getContent( 'Family' );
 do {
     $response = $request->getResponse();
     $array = json_decode(json_encode($response->records), true);
-    var_dump($array);
-    echo("<br />");
+    echo($array[0]['id']);
+    echo('<br />');
+    echo($array[0]['fields']['Name']);
+    echo('<br />');
+    echo($array[0]['fields']['Notes']);
+
 }
 while( $request = $response->next() );
 
