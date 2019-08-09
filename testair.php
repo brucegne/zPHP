@@ -16,19 +16,18 @@ $airtable = new Airtable(array(
 
 $request = $airtable->getContent( 'Family' );
 
-do {
-    $response = $request->getResponse();
-    $array = json_decode(json_encode($response->records), true);
-    echo(count($array));
-    echo('<br /><br />');
-    echo($array[0]['id']);
-    echo('<br />');
-    echo($array[0]['fields']['Name']);
-    echo('<br />');
-    echo($array[0]['fields']['Notes']);
 
+$response = $request->getResponse();
+$array = json_decode(json_encode($response->records), true);
+for($i=0;$i < count($array);$i++) {    
+    $array = json_decode(json_encode($check->records), true);
+    echo($array[$i]['id']);
+    echo('<br />');
+    echo($array[$i]['fields']['Name']);
+    echo('<br />');
+    echo($array[$i]['fields']['Notes']);
 }
-while( $request = $response->next() );
+
 
 // print_r($request);
 
