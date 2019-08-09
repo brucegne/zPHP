@@ -25,6 +25,7 @@ for($i=0;$i < count($array);$i++) {
     echo($array[$i]['fields']['Name']);
     echo('<br />');
     echo($array[$i]['fields']['Notes']);
+    echo('<br /><br />');
 }
 
 
