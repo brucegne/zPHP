@@ -24,7 +24,7 @@ do {
 }
 while( $request = $response->next() );
 
-print_r($request);
+// print_r($request);
 
 /*
 
