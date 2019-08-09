@@ -20,6 +20,7 @@ do {
     $response = $request->getResponse();
     $array = json_decode(json_encode($response->records), true);
     var_dump($array);
+    echo("<br />");
 }
 while( $request = $response->next() );
 
