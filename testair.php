@@ -20,7 +20,6 @@ $request = $airtable->getContent( 'Family' );
 $response = $request->getResponse();
 $array = json_decode(json_encode($response->records), true);
 for($i=0;$i < count($array);$i++) {    
-    $array = json_decode(json_encode($check->records), true);
     echo($array[$i]['id']);
     echo('<br />');
     echo($array[$i]['fields']['Name']);
