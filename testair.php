@@ -19,22 +19,28 @@ $request = $airtable->getContent( 'Family' );
 
 $response = $request->getResponse();
 $array = json_decode(json_encode($response->records), true);
-for($i=0;$i < count($array);$i++) {    
-    echo($array[$i]['id']);
-    echo('<br />');
-    echo($array[$i]['fields']['Name']);
-    echo('<br />');
-    echo($array[$i]['fields']['Notes']);
-    echo('<br /><br />');
+echo('<table border="1">');
+echo('<tr>th>ID</th><th>Name</th><th>Notes</th></tr>');
+for($i=0;$i < count($array);$i++) {
+    $ID = $array[$i]['id'];
+    $name = $array[$i]['fields']['Name'];
+    $notes = $array[$i]['fields']['Notes'];
+    echo('<tr><td>'.$ID.'</td><td>'.$name.'</td><td>'.$notes.'</td></tr>');
 }
+echo('</table>');
 
 
 // print_r($request);
 
 /*
 
+$update_contact_details = array(
+	'Telephone #' => '514-123-2942',
+);
+$update_contact = $airtable->updateContent("Contacts/{entry-id}",$update_contact_details);
+print_r($update_contact);
 
-// Create an array with all the fields you want 
+// Create an array with a   ll the fields you want 
 $new_contact_details = array(
     'Name'        =>"Contact Name",
     'Notes'     => "1234 Street Name, City, State, Zip, Country",
