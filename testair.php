@@ -19,8 +19,8 @@ $request = $airtable->getContent( 'Family' );
 
 $response = $request->getResponse();
 $array = json_decode(json_encode($response->records), true);
-echo('<table border="1">');
-echo('<tr>th>ID</th><th>Name</th><th>Notes</th></tr>');
+echo('<table border="0">');
+echo('<tr><th>ID</th><th>Name</th><th>Notes</th></tr>');
 for($i=0;$i < count($array);$i++) {
     $ID = $array[$i]['id'];
     $name = $array[$i]['fields']['Name'];
