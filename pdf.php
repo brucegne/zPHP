@@ -26,5 +26,5 @@ $pdf->SetLeftMargin(60);
 $pdf->SetFont('Arial');
 $pdf->SetFontSize(10);
 $pdf->Write(12,"Now is the time\nfor all good dogs\nto quit pooping on my \nfricking lawn.");
-$p$pdf->Output();
+$pdf->Output();
 ?>
