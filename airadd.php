@@ -16,7 +16,6 @@ $airtable = new Airtable(array(
 
 $request = $airtable->getContent( 'Family' );
 
-
 $response = $request->getResponse();
 $array = json_decode(json_encode($response->records), true);
 echo('<table border="0">');
@@ -33,6 +32,33 @@ echo('</table>');
 // print_r($request);
 
 /*
+Search and Sort
+$params = array(
+    "filterByFormula" => "AND( Status = 'New' )",
+    "sort" => array(array('field' => 'Count', 'direction' => "desc")),
+    "maxRecords" => 175,
+    "pageSize" => 50,
+    "view" => "Name of your View"
+);
+
+$request = $airtable->getContent( 'Contacts', $params);
+
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $name = test_input($_POST["name"]);
+  $email = test_input($_POST["email"]);
+  $website = test_input($_POST["website"]);
+  $comment = test_input($_POST["comment"]);
+  $gender = test_input($_POST["gender"]);
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
 
 $update_contact_details = array(
 	'Telephone #' => '514-123-2942',
