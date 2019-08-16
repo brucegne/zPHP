@@ -1,7 +1,7 @@
 <?php
 require('./fpdf/fpdf.php');
 
-$pdf = new FPDF('L','pt','letter');
+$pdf = new FPDF('P','pt','letter');
 $pdf->AddPage();
 $pdf->SetFont('Arial','',16);
 $pdf->Cell(40,10,'Hello World!');
