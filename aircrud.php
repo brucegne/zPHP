@@ -2,7 +2,7 @@
 <head>
 <style>
     body {
-        font-size: 24pt;
+        font-size: 56pt;
     }
 </style>    
 <body>
