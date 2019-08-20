@@ -1,3 +1,11 @@
+<html>
+<head>
+<style>
+    body {
+        font-size: 24pt;
+    }
+</style>    
+
 <?php
 
 // Simple example to setup and retrieve all data from a table 
@@ -29,6 +37,8 @@ for($i=0;$i < count($array);$i++) {
 }
 echo('</table>');
 
+</head>
+</html>
 
 // print_r($request);
 
