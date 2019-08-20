@@ -37,8 +37,6 @@ for($i=0;$i < count($array);$i++) {
 }
 echo('</table>');
 
-</head>
-</html>
 
 // print_r($request);
 
@@ -80,3 +78,6 @@ if($check->count > 0){
     // it's not there
 }
 */
+?>
+</head>
+</html>
