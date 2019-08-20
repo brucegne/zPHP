@@ -5,7 +5,7 @@
         font-size: 24pt;
     }
 </style>    
-
+<body>
 <?php
 
 // Simple example to setup and retrieve all data from a table 
@@ -79,5 +79,6 @@ if($check->count > 0){
 }
 */
 ?>
+</body>
 </head>
 </html>
