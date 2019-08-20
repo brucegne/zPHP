@@ -2,9 +2,10 @@
 <head>
 <style>
     body {
-        font-size: 56pt;
+        font-size: 56px;
     }
 </style>    
+</head>
 <body>
 <?php
 
@@ -80,5 +81,4 @@ if($check->count > 0){
 */
 ?>
 </body>
-</head>
 </html>
