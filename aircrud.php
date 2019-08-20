@@ -2,7 +2,7 @@
 <head>
 <style>
     table {
-        font-size: 56px;
+        font-size: 40px;
     }
 </style>    
 </head>
