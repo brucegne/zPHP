@@ -1,7 +1,7 @@
 <html>
 <head>
 <style>
-    body {
+    table {
         font-size: 56px;
     }
 </style>    
