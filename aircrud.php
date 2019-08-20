@@ -1,11 +1,4 @@
 <html>
-<head>
-<style>
-    table {
-        font-size: 40px;
-    }
-</style>    
-</head>
 <body>
 <?php
 
