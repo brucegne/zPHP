@@ -17,7 +17,7 @@ $airtable = new Airtable(array(
 ));
 
 $params = array(
-    "filterByFormula" => "AND( Name = 'Buddy Rockstar' )",
+    "filterByFormula" => "AND( Name != 'Buddy' )",
     "sort" => array(array('field' => 'Name', 'direction' => "asc")),
     "maxRecords" => 175,
     "pageSize" => 50
@@ -26,9 +26,6 @@ $params = array(
 
 $request = $airtable->getContent( 'Family', $params);
     
-// $request = $airtable->getContent( 'Family' );
-
-
 $response = $request->getResponse();
 $array = json_decode(json_encode($response->records), true);
 echo('<table border="0">');
