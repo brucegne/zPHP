@@ -18,7 +18,7 @@ $airtable = new Airtable(array(
 
 $params = array(
     "filterByFormula" => "AND( Name != 'New' )",
-    "sort" => array(array('field' => 'Name', 'direction' => "desc")),
+    "sort" => array(array('field' => 'Name', 'direction' => "asc")),
     "maxRecords" => 175,
     "pageSize" => 50
 //    "view" => "Name of your View"
