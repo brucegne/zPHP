@@ -31,7 +31,7 @@ $array = json_decode(json_encode($response->records), true);
 echo('<table border="0">');
 echo('<tr><th>ID</th><th>Name</th><th>Notes</th></tr>');
 for($i=0;$i < count($array);$i++) {
-    $ID = md5($array[$i]['id']);
+    $ID = $array[$i]['id'];
     $name = $array[$i]['fields']['Name'];
     $notes = $array[$i]['fields']['Notes'];
     echo('<tr><td>'.$ID.'</td><td>'.$name.'</td><td>'.$notes.'</td></tr>');
