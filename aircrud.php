@@ -16,7 +16,17 @@ $airtable = new Airtable(array(
     'base'      => 'appOEjuG867PcJetu',
 ));
 
-$request = $airtable->getContent( 'Family' );
+$params = array(
+    "filterByFormula" => "AND( Name != 'New' )",
+    "sort" => array(array('field' => 'Name', 'direction' => "desc")),
+    "maxRecords" => 175,
+    "pageSize" => 50
+//    "view" => "Name of your View"
+);
+
+$request = $airtable->getContent( 'Family', $params);
+    
+// $request = $airtable->getContent( 'Family' );
 
 
 $response = $request->getResponse();
