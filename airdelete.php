@@ -14,9 +14,10 @@ $airtable = new Airtable(array(
     'base'      => 'appOEjuG867PcJetu',
 ));
 
+$id = $_REQUEST['id'];
+$delete_contact = $airtable->deleteContent("Contacts/{$id}");
+
 $request = $airtable->getContent( 'Family' );
-
-
 $response = $request->getResponse();
 $array = json_decode(json_encode($response->records), true);
 echo('<table border="0">');
