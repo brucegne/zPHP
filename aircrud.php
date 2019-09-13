@@ -10,6 +10,18 @@ include('./Response.php');
 
 // use TANIOS\Airtable\Airtable;
 
+$airtable = new DavidZadrazil\AirtableApi\Airtable('keyE1hUaiUcOSiqc7', 'appOEjuG867PcJetu');
+$request = new DavidZadrazil\AirtableApi\Request($airtable, 'Family');
+
+$tableRequest = $request->getTable();
+
+do {
+  foreach ($tableRequest->getRecords() as $record) {
+    echo $record
+  }
+} while ($tableRequest = $tableRequest->nextPage());
+    
+/*
 $airtable = new Airtable(array(
     'api_key'   => 'keyE1hUaiUcOSiqc7',
     'base'      => 'appOEjuG867PcJetu',
