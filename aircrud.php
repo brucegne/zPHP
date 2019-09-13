@@ -17,7 +17,7 @@ $tableRequest = $request->getTable();
 
 do {
   foreach ($tableRequest->getRecords() as $record) {
-    echo $record
+    echo $record;
   }
 } while ($tableRequest = $tableRequest->nextPage());
     
