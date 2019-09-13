@@ -7,9 +7,8 @@
 include('./Airtable.php');
 include('./Request.php');
 include('./Response.php');
-include('./Record.php');
 
-use TANIOS\Airtable\Airtable;
+// use TANIOS\Airtable\Airtable;
 
 $airtable = new Airtable(array(
     'api_key'   => 'keyE1hUaiUcOSiqc7',
