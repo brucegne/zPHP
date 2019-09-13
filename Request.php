@@ -1,155 +1,151 @@
 <?php
+
+namespace DavidZadrazil\AirtableApi;
+
+use GuzzleHttp\Client;
+
 /**
- * Created by PhpStorm.
- * User: glali
- * Date: 2017-04-27
- * Time: 14:55
+ * Class Request
+ *
+ * @package DavidZadrazil
  */
-
-namespace TANIOS\Airtable;
-
-class Request implements \ArrayAccess
+class Request
 {
+	/**
+	 * @var Airtable
+	 */
+	private $airtable;
 
-    /**
-     * @var Airtable Instance of Airtable
-     */
-    private $airtable;
-    /**
-     * @var resource Instance of CURL
-     */
-    private $curl;
-    /**
-     * @var string Content type
-     */
-    private $content_type;
-    /**
-     * @var array Request data
-     */
-    private $data = [];
-    /**
-     * @var bool Is it a POST request?
-     */
-    private $is_post = false;
+	/**
+	 * @var string
+	 */
+	private $table;
 
-    /**
-     * @var array|boolean Relations to lazy load
-     */
-    private $relations;
+	/**
+	 * @var Client
+	 */
+	private $client;
 
-    /**
-     * Create a Request to AirTable API
-     * @param Airtable $airtable Instance of Airtable
-     * @param string $content_type Content type
-     * @param array $data Request data
-     * @param bool|string $is_post Is it a POST request?
-     */
-    public function __construct( $airtable, $content_type, $data = [], $is_post = false, $relations = false )
-    {
+	/**
+	 * @var null|string
+	 */
+	private $offset = null;
 
-        $this->airtable = $airtable;
-        $this->content_type = $content_type;
-        $this->data = $data;
-        $this->is_post = $is_post;
-        $this->relations = $relations;
+	/**
+	 * @var array
+	 */
+	private $parameters = [];
 
-    }
 
-    private function init()
-    {
+	/**
+	 * Request constructor.
+	 *
+	 * @param Airtable $airtable
+	 * @param $table
+	 */
+	public function __construct(Airtable $airtable, $table)
+	{
+		$this->airtable = $airtable;
+		$this->table = $table;
 
-        $headers = array(
-            'Content-Type: application/json',
-            sprintf('Authorization: Bearer %s', $this->airtable->getKey())
-        );
+		// Initialize Guzzle client
+		$this->client = new Client(
+			[
+				'base_uri' => $this->getRequestUrl(),
+				'headers'  => [
+					'Authorization' => sprintf('Bearer %s', $airtable->getApiKey())
+				]
+			]
+		);
+	}
 
-        $request = $this->content_type;
+	/**
+	 * Create new entry in record
+	 *
+	 * @param array $record
+	 *
+	 * @return Response
+	 */
+	public function createRecord(array $record)
+	{
+		$response = $this->client->request('POST', '', ['json' => ['fields' => $record]]);
+		return new Response($response, $this);
+	}
 
-        if( ! $this->is_post )
-        {
-            if (!empty($this->data)){
-                $data = http_build_query($this->data);
-                $request .= "?" . $data;
-            }
-        }
+	/**
+	 * Update existing record
+	 *
+	 * @param $id
+	 * @param array $record
+	 *
+	 * @return Response
+	 */
+	public function updateRecord($id, array $record)
+	{
+		$response = $this->client->request('PATCH', $this->getRequestUrl() . '/' . $id, ['json' => ['fields' => $record]]);
+		return new Response($response, $this);
+	}
 
-        $curl = curl_init($this->airtable->getApiUrl($request));
+	/**
+	 * Delete existring record
+	 *
+	 * @param $id
+	 *
+	 * @return Response
+	 */
+	public function deleteRecord($id)
+	{
+		$response = $this->client->request('DELETE', $this->getRequestUrl() . '/' . $id);
+		return new Response($response, $this);
+	}
 
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	/**
+	 * Get records from table
+	 *
+	 * @param array $parameters
+	 *
+	 * @return Response
+	 */
+	public function getTable($parameters = [])
+	{
+		$this->parameters = $parameters;
 
-        if( $this->is_post )
-        {
-            if( strtolower( $this->is_post ) == 'patch' )
-            {
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PATCH');
-            }
-            else if( strtolower( $this->is_post ) == 'delete' )
-            {
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
-            }
-            curl_setopt($curl,CURLOPT_POST, count($this->data));
-            curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($this->data));
-        }
+		$response = $this->client->request('GET', '?' . http_build_query($parameters));
+		return new Response($response, $this);
+	}
 
-        $this->curl = $curl;
+	/**
+	 * @return string
+	 */
+	private function getRequestUrl(): string
+	{
+		return $this->airtable->getBaseUrl() . '/' . $this->airtable->getBase() . '/' . $this->table;
+	}
 
-    }
+	/**
+	 * @return null|string
+	 */
+	public function getOffset()
+	{
+		return $this->offset;
+	}
 
-    /**
-     * @return Response Get response from API
-     */
-    public function getResponse()
-    {
+	/**
+	 * @param null|string $offset
+	 *
+	 * @return $this
+	 */
+	public function setOffset($offset)
+	{
+		$this->offset = $offset;
+		return $this;
+	}
 
-        $this->init();
-
-        $response_string = curl_exec( $this->curl );
-
-        $response = new Response( $this->airtable, $this, $response_string, $this->relations );
-            
-        return $response;
-               
-    }
-
-    public function __set( $key, $value )
-    {
-        if( ! is_array( $this->data ) )
-        {
-            $this->data = [];
-        }
-
-        $this->data[ $key ] = $value;
-    }
-
-    public function offsetExists($offset)
-    {
-        return is_array( $this->data) && isset( $this->data[ $offset ] );
-    }
-
-    public function offsetGet($offset)
-    {
-        return is_array( $this->data ) && isset( $this->data[ $offset ] )
-            ? $this->data[ $offset ]
-            : null;
-    }
-
-    public function offsetSet($offset, $value)
-    {
-        if( ! is_array( $this->data ) )
-        {
-            $this->data = [];
-        }
-
-        $this->data[ $offset ] = $value;
-    }
-
-    public function offsetUnset($offset)
-    {
-        if( is_array( $this->data ) && isset( $this->data[ $offset ] ) )
-        {
-            unset( $this->data[ $offset ] );
-        }
-    }
-
+	/**
+	 * @return array
+	 */
+	public function getParameters(): array
+	{
+		return $this->parameters;
+	}
 }

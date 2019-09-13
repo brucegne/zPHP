@@ -7,7 +7,7 @@
 include('./Airtable.php');
 include('./Request.php');
 include('./Response.php');
-
+include('./Record.php');
 
 use TANIOS\Airtable\Airtable;
 

@@ -1,118 +1,63 @@
 <?php
 
-namespace TANIOS\Airtable;
+namespace DavidZadrazil\AirtableApi;
 
 /**
- * Airtable API Class
+ * Class Airtable
  *
- * @author Sleiman Tanios
- * @copyright Sleiman Tanios - TANIOS 2017
- * @version 1.0
+ * @package DavidZadrazil
  */
-
-
-class Airtable 
+class Airtable
 {
-	
-    const API_URL = "https://api.airtable.com/v0/";
+	const BASE_URL = 'https://api.airtable.com/v0';
 
-    private $_key;
+	/**
+	 * API key
+	 *
+	 * @var null|string
+	 */
+	private $apiKey = null;
 
-    private $_base;
-	
-	public function __construct($config)
-    {
-        if (is_array($config)) {
-            $this->setKey($config['api_key']);
-            $this->setBase($config['base']);
-        } else {
-            echo 'Error: __construct() - Configuration data is missing.';
-        }
-    }
+	/**
+	 * Base ID which is unique for each base
+	 *
+	 * @var null|string
+	 */
+	private $base = null;
 
-    public function setKey($key)
-    {
-        $this->_key = $key;
-    }
-
-    public function getKey()
-    {
-        return $this->_key;
-    }
-
-    public function setBase($base)
-    {
-        $this->_base = $base;
-    }
-
-    public function getBase()
-    {
-        return $this->_base;
-    }
-
-    public function getApiUrl($request){
-	    $request = str_replace( ' ', '%20', $request );
-    	$url = self::API_URL.$this->getBase().'/'.$request;
-    	return $url;
-    }
-
-    function getContent($content_type,$params="",$relations=false)
-    {
-        return new Request( $this, $content_type, $params, false, $relations );
-	}
-
-	function saveContent($content_type,$fields)
+	/**
+	 * Airtable constructor.
+	 *
+	 * @param $apiKey
+	 * @param $base
+	 */
+	public function __construct($apiKey, $base)
 	{
-
-		$fields = array('fields'=>$fields);
-
-		$request = new Request( $this, $content_type, $fields, true );
-
-		return $request->getResponse();
-
+		$this->apiKey = $apiKey;
+		$this->base = $base;
 	}
 
-	function updateContent($content_type,$fields)
+	/**
+	 * @return null|string
+	 */
+	public function getApiKey(): string
 	{
-
-		$fields = array('fields'=>$fields);
-
-		$request = new Request( $this, $content_type, $fields, 'patch' );
-
-		return $request->getResponse();
-
+		return $this->apiKey;
 	}
 
-	function deleteContent($content_type)
-    {
+	/**
+	 * @return null|string
+	 */
+	public function getBase(): string
+	{
+		return $this->base;
+	}
 
-        $request = new Request( $this, $content_type, [], 'delete' );
-
-        return $request->getResponse();
-
-    }
-    
-    function quickCheck($content_type,$field="",$value="")
-    {
-        $params = "";
-
-        if (!empty($field)&& !empty($value)){
-            
-            $params = array(
-                "filterByFormula" => "AND({{$field}} = '$value')",
-            );
-        }
-        
-        $request = new Request( $this, $content_type, $params, false );
-
-        $response = $request->getResponse();
-        
-     
-        $results['count'] = count($response->records);
-        $results['records'] = $response->records;
-        
-     
-        return (object)$results;
-    }
-
+	/**
+	 * @return string
+	 */
+	public function getBaseUrl(): string
+	{
+		return self::BASE_URL;
+	}
 }
