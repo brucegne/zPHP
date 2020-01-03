@@ -6,7 +6,7 @@
   var_dump($arr->records);
   $recs = $arr->records;
   for($i=0;$i<5;$i++){
-    echo($recs[$i]['name']);
+    var_dump($recs[$i]);
     echo("<br />");
   }
   echo "<br /><br />";
