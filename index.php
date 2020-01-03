@@ -6,7 +6,7 @@
   var_dump($arr->records);
   $recs = $arr->records;
   for($i=0;$i<5;$i++){
-    $rec = json_decode($recs[$i]);
+    $rec = $recs[$i);
     echo $rec->name;
     echo("<br />");
   }
