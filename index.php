@@ -1,6 +1,11 @@
 
 <?php
 	echo "PHP is now working";
-  echo file_get_contents("https://zpie.now.sh/json");
+  $json = file_get_contents("https://zpie.now.sh/json");
+  $arr = json_decode($json);
+  foreach($arr->records as $key=>$value){
+      echo $key . "=>" . $value . "<br>";
+  }
+  echo "<hr>";  
 ?>
 <p><a href="./aircrud.php">Test AirTable</a></p>
