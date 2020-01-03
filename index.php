@@ -3,7 +3,7 @@
 	echo "PHP is now working";
   $json = file_get_contents("https://zpie.now.sh/json");
   $arr = json_decode($json);
-  var_dump($arr);
+  var_dump($arr->records);
   foreach($arr as $key=>$value){
       echo $key . "=>" . $value . "<br>";
   }
