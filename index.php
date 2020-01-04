@@ -11,15 +11,19 @@
   }
   echo "<br /><br />";
 
-$url = 'https://zpie.now.sh/postdata';
-$data = array('name' => 'Good Old Budders', 'age' => '13', 'married' => 'Just mommy Kellie');
-$options = array(
-        'http' => array(
-        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-        'method'  => 'POST',
-        'content' => http_build_query($data),
-    )
-);
+if ($_REQUEST['tadd'] == 'y') {
+  
+  $url = 'https://zpie.now.sh/postdata';
+  $data = array('name' => 'Good Old Budders', 'age' => '13', 'married' => 'Just mommy Kellie');
+  $options = array(
+          'http' => array(
+          'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+          'method'  => 'POST',
+          'content' => http_build_query($data),
+      )
+  );
+};
+
 
 $context  = stream_context_create($options);
 $result = file_get_contents($url, false, $context);
