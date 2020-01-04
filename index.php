@@ -11,8 +11,8 @@
   }
   echo "<br /><br />";
 
-$url = 'https://zpie.now.sh/adddata';
-$data = array('created' => '12345678', 'name' => 'Good Old Budders', 'age' => '13', 'married' => 'Just mommy Kellie');
+$url = 'https://zpie.now.sh/postdata';
+$data = array('name' => 'Good Old Budders', 'age' => '13', 'married' => 'Just mommy Kellie');
 $options = array(
         'http' => array(
         'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
