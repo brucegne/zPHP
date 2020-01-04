@@ -1,16 +1,6 @@
 
 <?php
 	echo "PHP is now working<br /><br />";
-  $json = file_get_contents("https://zpie.now.sh/json");
-  $arr = json_decode($json);
-  $recs = $arr->records;
-  for($i=0;$i<count($recs);$i++){
-    $rec = $recs[$i];
-    echo $rec->name;
-    echo("<br />");
-  }
-  echo "<br /><br />";
-
 if ($_REQUEST['tadd'] == 'y') {
   
   $url = 'https://zpie.now.sh/postdata';
@@ -26,6 +16,17 @@ if ($_REQUEST['tadd'] == 'y') {
   $result = file_get_contents($url, false, $context);
   var_dump($result);
 };
+
+  $json = file_get_contents("https://zpie.now.sh/json");
+  $arr = json_decode($json);
+  $recs = $arr->records;
+  for($i=0;$i<count($recs);$i++){
+    $rec = $recs[$i];
+    echo $rec->name;
+    echo("<br />");
+  }
+  echo "<br /><br />";
+
 
 
 /*
