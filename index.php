@@ -22,12 +22,11 @@ if ($_REQUEST['tadd'] == 'y') {
           'content' => http_build_query($data),
       )
   );
+  $context  = stream_context_create($options);
+  $result = file_get_contents($url, false, $context);
+  var_dump($result);
 };
 
-
-$context  = stream_context_create($options);
-$result = file_get_contents($url, false, $context);
-var_dump($result);
 
 /*
 $url = 'http://www.someurl.com';
