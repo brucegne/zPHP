@@ -2,6 +2,6 @@
     "version": 2,
     "name": "zPHP",
     "builds": [
-        { "src": "*.php", "use": "@now/php" }
+        { "src": "*.php", "use": "now-php@0.0.9" }
     ]
 }
