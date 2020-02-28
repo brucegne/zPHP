@@ -17,7 +17,7 @@ if ($_REQUEST['tadd'] == 'y') {
   var_dump($result);
 };
 
-  $json = file_get_contents("https://zpie.now.sh/json");
+  $json = file_get_contents("https://zpie.now.sh/mjson");
   $arr = json_decode($json);
   $recs = $arr->records;
   for($i=0;$i<count($recs);$i++){
